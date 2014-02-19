@@ -1,10 +1,16 @@
-﻿using UnityEngine;
+﻿// Coded by Lawrence Howard - Advanced Game Studies 2013/2014
+// 10183346@lincoln.ac.uk
+
+using UnityEngine;
 using System.Collections;
 
 public class Player : MonoBehaviour {
 	
 	CharacterController charCont;
-	GameObject mCamera;
+	public GameObject mCamera;
+
+	public bool isDriving = false;
+	public Transform FollowWhileDriving;
 	
 	// Use this for initialization
 	void Start () {
@@ -17,9 +23,15 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		RotatePlayerToMouse();
-		
-		WASDMovement();
+		if (!isDriving) // Only allow normal WASD movement when not driving
+		{
+			RotatePlayerToMouse();
+			WASDMovement();
+		}
+		else // Follow car
+		{
+			transform.position = FollowWhileDriving.position;
+		}
     }
 	
 	// Rotates the player character to always face the mouse.
